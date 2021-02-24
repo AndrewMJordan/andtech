@@ -1,0 +1,22 @@
+{
+	"name": "com.andtech.core",
+	"version": "0.1.0",
+	"displayName": "Andtech",
+	"description": "Standard utility assets for Unity",
+	"author": {
+		"name": "AndrewMJordan",
+		"email": null
+	},
+	"samples": [
+		{
+			"displayName": "UI",
+			"Description": "Example UI object",
+			"path": "Samples~/UI"
+		},
+		{
+			"displayName": "Grid System",
+			"Description": "Example grid implementation",
+			"path": "Samples~/Grid System"
+		}
+	]
+}
