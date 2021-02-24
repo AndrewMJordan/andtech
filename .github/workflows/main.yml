@@ -61,8 +61,8 @@ jobs:
 
           if [ -e "Samples" ]
           then
-            goo transform hide-folder "Samples"
-            goo package ignore-folder . "Samples"
+            #goo transform hide-folder "Samples"
+            #goo package ignore-folder . "Samples"
             #goo transform hide-folder "Tests"
           fi
 
