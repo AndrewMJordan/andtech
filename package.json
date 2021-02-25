@@ -1,21 +1,31 @@
 {
 	"name": "com.andtech.core",
-	"version": "0.1.1",
+	"version": "0.1.2",
 	"displayName": "Andtech",
 	"description": "Standard utility assets for Unity",
+	"unity": "2019.4",
+	"keywords": [
+		"andtech",
+		"utility",
+		"tools"
+	],
+	"type": "tool",
 	"author": {
 		"name": "AndrewMJordan",
-		"email": null
+		"email": "mail@andtech.me",
+		"url": "https://github.com/AndrewMJordan/"
 	},
+	"repository": "https://github.com/AndrewMJordan/andtech.git",
+	"license": "BSD-4-Clause",
 	"samples": [
 		{
 			"displayName": "UI",
-			"Description": "Example UI object",
+			"description": "Example UI object",
 			"path": "Samples~/UI"
 		},
 		{
 			"displayName": "Grid System",
-			"Description": "Example grid implementation",
+			"description": "Example grid implementation",
 			"path": "Samples~/Grid System"
 		}
 	]
