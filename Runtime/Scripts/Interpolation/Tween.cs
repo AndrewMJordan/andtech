@@ -38,7 +38,7 @@ namespace Andtech {
 				yield return easingFunction(t / duration);
 			}
 
-			yield return 1.0F;
+			yield return easingFunction(1.0F);
 		}
 
 		public static IEnumerable<float> Linear(float duration) => Generate(Easing.Linear, duration);
