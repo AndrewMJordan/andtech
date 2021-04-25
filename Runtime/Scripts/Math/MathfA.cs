@@ -8,9 +8,11 @@
 
 using UnityEngine;
 
-namespace Andtech {
+namespace Andtech
+{
 
-	public static class MathfA {
+	public static class MathfA
+	{
 
 		/// <summary>
 		/// Loops the value <paramref name="t"/>, so that it is never larger than or equal to <paramref name="length"/> and never smaller than 0.
@@ -46,19 +48,24 @@ namespace Andtech {
 		/// <param name="max">The upper bound (exclusive).</param>
 		/// <param name="repeatCount">The number of repetitions of the variables.</param>
 		/// <returns>The looped value.</returns>
-		public static int Repeat(int t, int min, int max, out int repeatCount) {
+		public static int Repeat(int t, int min, int max, out int repeatCount)
+		{
 			var range = max - min;
-			if (range <= 1) {
+			if (range <= 1)
+			{
 				repeatCount = 0;
 				return min;
 			}
 
-			if (t < min) {
+			if (t < min)
+			{
+				max -= 1;
 				var distance = max - t;
 				repeatCount = distance / range;
 				return max - (distance % range);
 			}
-			else {
+			else
+			{
 				var distance = t - min;
 				repeatCount = distance / range;
 				return (distance % range) + min;
@@ -87,7 +94,8 @@ namespace Andtech {
 		/// </summary>
 		/// <param name="values">The set of values.</param>
 		/// <returns>The greates common divisor.</returns>
-		public static int GCD(params int[] values) {
+		public static int GCD(params int[] values)
+		{
 			int lastGCD = values[0];
 			int n = values.Length;
 			for (int i = 1; i < n; i++)
