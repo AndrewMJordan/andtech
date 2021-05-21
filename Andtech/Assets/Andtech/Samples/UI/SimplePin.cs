@@ -29,7 +29,9 @@ namespace Andtech.Samples {
 
 		protected virtual void Awake() {
 			if (source && viewport)
+			{
 				ScreenPointStrategy = () => viewport.WorldToScreenPoint(source.position);
+			}
 		}
 		#endregion
 

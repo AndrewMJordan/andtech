@@ -31,7 +31,9 @@ namespace Andtech {
 		/// <returns>The minimum equivalent vector.</returns>
 		public static Vector2Int Reduce(this Vector2Int vector) {
 			if (vector == Vector2Int.zero)
+			{
 				return vector;
+			}
 
 			int gcd = MathfA.GCD(
 				Mathf.Abs(vector.x),
@@ -75,10 +77,14 @@ namespace Andtech {
 			#region LOCAL_FUNCTIONS
 			int Sign(int x) {
 				if (x < 0)
+				{
 					return -1;
+				}
 
 				if (x > 0)
+				{
 					return 1;
+				}
 
 				return 0;
 			}

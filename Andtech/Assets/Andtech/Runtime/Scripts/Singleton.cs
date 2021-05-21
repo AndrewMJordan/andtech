@@ -11,7 +11,9 @@ namespace Andtech {
 		public static T Instance {
 			get {
 				if (!HasInstance)
+				{
 					throw new SingletonReferenceException(typeof(T));
+				}
 
 				return instance;
 			}

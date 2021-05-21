@@ -13,10 +13,14 @@ namespace Andtech {
 		public bool IsSingletonInstance {
 			get {
 				if (slot is null)
+				{
 					return false;
+				}
 
 				if (!slot.HasValue)
+				{
 					return false;
+				}
 
 				return ReferenceEquals(this, Instance);
 			}
@@ -32,7 +36,9 @@ namespace Andtech {
 		public static T Instance {
 			get {
 				if (!HasInstance)
+				{
 					throw new SingletonReferenceException(typeof(T));
+				}
 
 				return slot.Value;
 			}
@@ -45,9 +51,14 @@ namespace Andtech {
 			slot = new Slot<T>();
 			slot.OnValueChanged += (oldValue, newValue) => {
 				if (oldValue != null)
+				{
 					Decommissioned?.Invoke(null, new SingletonEventArgs { Instance = oldValue });
+				}
+
 				if (newValue != null)
+				{
 					Commissioned?.Invoke(null, new SingletonEventArgs { Instance = newValue });
+				}
 			};
 		}
 
@@ -57,12 +68,16 @@ namespace Andtech {
 		#region MONOBEHAVIOUR
 		protected virtual void OnEnable() {
 			if (!HasInstance)
+			{
 				Instance = this as T;
+			}
 		}
 
 		protected virtual void OnDisable() {
 			if (IsSingletonInstance)
+			{
 				Instance = null;
+			}
 		}
 		#endregion
 

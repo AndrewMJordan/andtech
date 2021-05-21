@@ -17,7 +17,9 @@ namespace Andtech {
 		private RectTransform RectTransform {
 			get {
 				if (!rectTransform)
+				{
 					rectTransform = transform as RectTransform;
+				}
 
 				return rectTransform;
 			}

@@ -38,7 +38,9 @@ namespace Andtech {
 		/// <returns>The minimum equivalent vector.</returns>
 		public static Vector3Int Reduce(this Vector3Int vector) {
 			if (vector == Vector3Int.zero)
+			{
 				return Vector3Int.zero;
+			}
 
 			int gcd = MathfA.GCD(
 				Mathf.Abs(vector.x),
@@ -92,10 +94,14 @@ namespace Andtech {
 			#region LOCAL_FUNCTIONS
 			int Sign(int x) {
 				if (x < 0)
+				{
 					return -1;
+				}
 
 				if (x > 0)
+				{
 					return 1;
+				}
 
 				return 0;
 			}

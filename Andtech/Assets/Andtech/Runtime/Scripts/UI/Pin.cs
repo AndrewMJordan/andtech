@@ -42,9 +42,13 @@ namespace Andtech {
 
 			if (!same) {
 				if (isVisible)
+				{
 					OnEnterScreen();
+				}
 				else
+				{
 					OnExitScreen();
+				}
 			}
 
 			if (isVisible) {

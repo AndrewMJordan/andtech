@@ -22,7 +22,9 @@ namespace Andtech {
 			// Compute "determinant" term
 			float determinant = directionA.x * directionB.y - directionA.y * directionB.x;
 			if (determinant == 0)
+			{
 				throw new ArithmeticException("The rays do not intersect in R^2");
+			}
 
 			// Solve for scale factors (s, t)
 			float numeratorS = delta.x * directionB.y - delta.y * directionA.x;
@@ -47,7 +49,9 @@ namespace Andtech {
 			// Compute "determinant" term
 			float determinant = directionA.x * directionB.y - directionA.y * directionB.x;
 			if (determinant == 0)
+			{
 				throw new ArithmeticException("The rays do not intersect in R^2");
+			}
 
 			// Solve for scale factors (s, t)
 			float numeratorS = delta.x * directionB.y - delta.y * directionB.x;
@@ -74,18 +78,24 @@ namespace Andtech {
 			// Compute "determinant" term
 			float determinant = directionA.x * directionB.y - directionA.y * directionB.x;
 			if (determinant.CompareTo(0.0F) == 0)
+			{
 				return false;
+			}
 
 			// Solve for scale factors (s, t)
 			float numeratorS = delta.x * directionB.y - delta.y * directionB.x;
 			float s = numeratorS / determinant;
 			if (s < 0.0F || s > 1.0F)
+			{
 				return false;
+			}
 
 			float numeratorT = delta.x * directionA.y - delta.y * directionA.x;
 			float t = numeratorT / determinant;
 			if (t < 0.0F || t > 1.0F)
+			{
 				return false;
+			}
 
 			return true;
 		}

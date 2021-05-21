@@ -67,7 +67,9 @@ namespace Andtech {
 		/// <returns>The snapped vector.</returns>
 		public Vector3 Snap(Vector3 vector) {
 			if (IsDirty)
+			{
 				Rebuild();
+			}
 
 			Vector3 pre = prefix.MultiplyPoint3x4(vector);
 			Vector3 snapped = pre.Round();

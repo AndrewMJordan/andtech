@@ -134,31 +134,45 @@ namespace Andtech {
 			Vector3Int current;
 			current = new Vector3Int(vector.x, 0, 0);
 			if (current != Vector3Int.zero)
+			{
 				yield return current;
+			}
 
 			current = new Vector3Int(0, vector.y, 0);
 			if (current != Vector3Int.zero)
+			{
 				yield return current;
+			}
 
 			current = new Vector3Int(vector.x, vector.y, 0);
 			if (current != Vector3Int.zero)
+			{
 				yield return current;
+			}
 
 			current = new Vector3Int(0, 0, vector.z);
 			if (current != Vector3Int.zero)
+			{
 				yield return current;
+			}
 
 			current = new Vector3Int(vector.x, 0, vector.z);
 			if (current != Vector3Int.zero)
+			{
 				yield return current;
+			}
 
 			current = new Vector3Int(0, vector.y, vector.z);
 			if (current != Vector3Int.zero)
+			{
 				yield return current;
+			}
 
 			current = new Vector3Int(vector.x, vector.y, vector.z);
 			if (current != Vector3Int.zero)
+			{
 				yield return current;
+			}
 		}
 	}
 }
