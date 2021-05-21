@@ -37,15 +37,7 @@ namespace Andtech
 		/// </summary>
 		public static SingletonBehaviour Instance
 		{
-			get
-			{
-				if (!HasInstance)
-				{
-					throw new SingletonReferenceException(typeof(SingletonBehaviour));
-				}
-
-				return slot.Value;
-			}
+			get => slot.Value;
 			protected set => slot.Value = value;
 		}
 		protected static Slot<SingletonBehaviour> Slot => slot;
@@ -96,7 +88,15 @@ namespace Andtech
 	public abstract partial class SingletonBehaviour<T> : SingletonBehaviour where T : SingletonBehaviour<T>
 	{
 		public static new T Instance {
-			get => (T)SingletonBehaviour.Instance;
+			get
+			{
+				if (HasInstance)
+				{
+					return (T)SingletonBehaviour.Instance;
+				}
+
+				throw new SingletonReferenceException(typeof(T));
+			}
 			protected set => SingletonBehaviour.Instance = value;
 		}
 
