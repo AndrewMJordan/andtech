@@ -1,5 +1,4 @@
-﻿using UnityEngine;
-
+﻿
 namespace Andtech
 {
 
@@ -9,6 +8,7 @@ namespace Andtech
 
 		static SubsystemBehaviour()
 		{
+			InitializedOnLoad += () => observers?.Clear();
 			Commissioned += (sender, e) => observers.Set(e.Instance);
 			Decommissioned += (sender, e) => observers.Clear(e.Instance);
 		}
@@ -28,8 +28,5 @@ namespace Andtech
 		/// <returns>The observer was successfully removed.</returns>
 		/// <remarks>The observer will be immediately receive registration callbacks if the subsystem is currently active.</remarks>
 		public static bool Unregister(IObserver<T> observer) => observers.Remove(observer);
-
-		[RuntimeInitializeOnLoadMethod]
-		internal static void ResetCache() => observers?.Clear();
 	}
 }
