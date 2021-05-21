@@ -21,10 +21,46 @@ namespace Andtech
 	[DebuggerStepThrough]
 	public abstract class SingletonBehaviour : MonoBehaviour
 	{
+
+		/// <summary>
+		/// Initializes the singleton environment.
+		/// </summary>
+		/// <remarks>Note: <see cref="RuntimeInitializeOnLoadMethodAttribute"/> may not work on generic <see cref="MonoBehaviour"/>s.</remarks>
+		[RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+		internal static void InitializeOnLoad()
+		{
+			InitializedOnLoad?.Invoke();
+		}
+
+		#region EVENT
+		/// <summary>
+		/// Use this to receive <see cref="RuntimeInitializeOnLoadMethodAttribute"/> callbacks.
+		/// </summary>
+		public static event Action InitializedOnLoad;
+		#endregion
+	}
+
+	public abstract partial class SingletonBehaviour<T> : SingletonBehaviour where T : SingletonBehaviour<T>
+	{
 		/// <summary>
 		/// There exists a singleton instance.
 		/// </summary>
 		public static bool HasInstance => slot.HasValue;
+		/// <summary>
+		/// The current singleton instance.
+		/// </summary>
+		public static T Instance {
+			get
+			{
+				if (HasInstance)
+				{
+					return slot.Value;
+				}
+
+				throw new SingletonReferenceException(typeof(T));
+			}
+			protected set => slot.Value = value;
+		}
 		/// <summary>
 		/// Is this the current singleton instance?
 		/// </summary>
@@ -40,77 +76,12 @@ namespace Andtech
 				return ReferenceEquals(this, Instance);
 			}
 		}
-		/// <summary>
-		/// The current singleton instance.
-		/// </summary>
-		public static SingletonBehaviour Instance
-		{
-			get => slot.Value;
-			protected set => slot.Value = value;
-		}
-		protected static Slot<SingletonBehaviour> Slot => slot;
 
-		private static readonly Slot<SingletonBehaviour> slot = new Slot<SingletonBehaviour>();
-
-		/// <summary>
-		/// Initializes the singleton environment.
-		/// </summary>
-		/// <remarks>Note: <see cref="RuntimeInitializeOnLoadMethodAttribute"/> may not work on generic <see cref="MonoBehaviour"/>s.</remarks>
-		[RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
-		internal static void InitializeOnLoad()
-		{
-			Instance = null;
-			InitializedOnLoad?.Invoke();
-		}
-
-		protected void SetInstance(SingletonBehaviour instance)
-		{
-			if (!HasInstance)
-			{
-				Instance = instance;
-			}
-		}
-
-		protected void ClearInstance(SingletonBehaviour instance)
-		{
-			if (instance.IsSingletonInstance)
-			{
-				Instance = null;
-			}
-		}
-
-		#region MONOBEHAVIOUR
-		protected virtual void OnEnable() => SetInstance(this);
-
-		protected virtual void OnDisable() => ClearInstance(this);
-		#endregion
-
-		#region EVENT
-		/// <summary>
-		/// Use this to receive <see cref="RuntimeInitializeOnLoadMethodAttribute"/> callbacks.
-		/// </summary>
-		public static event Action InitializedOnLoad;
-		#endregion
-	}
-
-	public abstract partial class SingletonBehaviour<T> : SingletonBehaviour where T : SingletonBehaviour<T>
-	{
-		public static new T Instance {
-			get
-			{
-				if (HasInstance)
-				{
-					return (T)SingletonBehaviour.Instance;
-				}
-
-				throw new SingletonReferenceException(typeof(T));
-			}
-			protected set => SingletonBehaviour.Instance = value;
-		}
+		private static readonly Slot<T> slot = new Slot<T>();
 
 		static SingletonBehaviour()
 		{
-			Slot.OnValueChanged += (oldValue, newValue) =>
+			slot.OnValueChanged += (oldValue, newValue) =>
 			{
 				if (oldValue != null)
 				{
@@ -122,6 +93,28 @@ namespace Andtech
 				}
 			};
 		}
+
+		protected void SetInstance(T instance)
+		{
+			if (!HasInstance)
+			{
+				Instance = instance;
+			}
+		}
+
+		protected void ClearInstance(T instance)
+		{
+			if (instance.IsSingletonInstance)
+			{
+				Instance = null;
+			}
+		}
+
+		#region MONOBEHAVIOUR
+		protected virtual void OnEnable() => SetInstance((T)this);
+
+		protected virtual void OnDisable() => ClearInstance((T)this);
+		#endregion
 
 		#region TYPE
 		public class SingletonEventArgs : EventArgs
