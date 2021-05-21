@@ -3,11 +3,6 @@ using System.Diagnostics;
 
 namespace Andtech {
 
-	public class SlotEventArgs<T> : EventArgs {
-		public T OldValue { get; internal set; }
-		public T NewValue { get; internal set; }
-	}
-
 	/// <summary>
 	/// A container for a replaceable value.
 	/// </summary>
@@ -23,10 +18,12 @@ namespace Andtech {
 				T oldValue = Value;
 				T newValue = value;
 				if (ReferenceEquals(newValue, oldValue))
+				{
 					return;
+				}
 
 				this.value = newValue;
-				OnReplace(new SlotEventArgs<T> { OldValue = oldValue, NewValue = Value });
+				OnValueChanged?.Invoke(oldValue, newValue);
 			}
 		}
 		public bool HasValue => Value != null;
@@ -39,12 +36,10 @@ namespace Andtech {
 
 		#region EVENT
 		/// <summary>
-		/// The value became replaced.
+		/// The value became changed.
 		/// (Client will receive the oldValue and newValue)
 		/// </summary>
-		public event EventHandler<SlotEventArgs<T>> Replaced;
-
-		protected virtual void OnReplace(SlotEventArgs<T> e) => Replaced?.Invoke(this, e);
+		public event Action<T, T> OnValueChanged;
 		#endregion
 	}
 }

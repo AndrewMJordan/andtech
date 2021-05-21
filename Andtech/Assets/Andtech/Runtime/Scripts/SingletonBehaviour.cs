@@ -43,11 +43,11 @@ namespace Andtech {
 
 		static SingletonBehaviour() {
 			slot = new Slot<T>();
-			slot.Replaced += (sender, e) => {
-				if (e.OldValue != null)
-					Decommissioned?.Invoke(null, new SingletonEventArgs { Instance = e.OldValue });
-				if (e.NewValue != null)
-					Commissioned?.Invoke(null, new SingletonEventArgs { Instance = e.NewValue });
+			slot.OnValueChanged += (oldValue, newValue) => {
+				if (oldValue != null)
+					Decommissioned?.Invoke(null, new SingletonEventArgs { Instance = oldValue });
+				if (newValue != null)
+					Commissioned?.Invoke(null, new SingletonEventArgs { Instance = newValue });
 			};
 		}
 
