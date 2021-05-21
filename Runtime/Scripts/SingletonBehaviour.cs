@@ -56,7 +56,7 @@ namespace Andtech
 		/// Initializes the singleton environment.
 		/// </summary>
 		/// <remarks>Note: <see cref="RuntimeInitializeOnLoadMethodAttribute"/> may not work on generic <see cref="MonoBehaviour"/>s.</remarks>
-		[RuntimeInitializeOnLoadMethod]
+		[RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
 		internal static void InitializeOnLoad()
 		{
 			Instance = null;
