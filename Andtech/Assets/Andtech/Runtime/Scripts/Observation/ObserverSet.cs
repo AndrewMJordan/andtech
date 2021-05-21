@@ -1,11 +1,15 @@
 ﻿using System.Collections.Generic;
 
-namespace Andtech {
+namespace Andtech
+{
 
-	public class ObserverSet<T> {
-		public T Subject {
+	public class ObserverSet<T>
+	{
+		public T Subject
+		{
 			get => subject;
-			private set {
+			private set
+			{
 				var oldValue = Subject;
 				var newValue = value;
 				var same = ReferenceEquals(newValue, oldValue);
@@ -14,14 +18,16 @@ namespace Andtech {
 					return;
 				}
 
-				if (oldValue != null) {
+				if (oldValue != null)
+				{
 					foreach (var observer in observers)
 					{
 						observer.OnUnregister(oldValue);
 					}
 				}
 				subject = newValue;
-				if (newValue != null) {
+				if (newValue != null)
+				{
 					foreach (var observer in observers)
 					{
 						observer.OnRegister(Subject);
@@ -35,7 +41,8 @@ namespace Andtech {
 
 		private readonly HashSet<IObserver<T>> observers = new HashSet<IObserver<T>>();
 
-		public void Set(T instance) {
+		public void Set(T instance)
+		{
 			if (HasSubject)
 			{
 				return;
@@ -44,7 +51,8 @@ namespace Andtech {
 			Subject = instance;
 		}
 
-		public void Clear(T instance) {
+		public void Clear(T instance)
+		{
 			if (instance.Equals(Subject))
 			{
 				Subject = default;
@@ -59,7 +67,8 @@ namespace Andtech {
 		/// <param name="observer">The observer to add.</param>
 		/// <returns>The observer was successfully added.</returns>
 		/// <remarks>The observer will be immediately receive registration callbacks if the subject is already enabled.</remarks>
-		public bool Add(IObserver<T> observer) {
+		public bool Add(IObserver<T> observer)
+		{
 			if (!observers.Add(observer))
 			{
 				return false;
@@ -81,7 +90,8 @@ namespace Andtech {
 		/// <param name="observer">The observer to remove.</param>
 		/// <returns>The observer was successfully removed.</returns>
 		/// <remarks>The observer will be immediately receive registration callbacks if the subject is currently enabled.</remarks>
-		public bool Remove(IObserver<T> observer) {
+		public bool Remove(IObserver<T> observer)
+		{
 			if (!observers.Remove(observer))
 			{
 				return false;

@@ -1,8 +1,10 @@
 ﻿using UnityEngine;
 
-namespace Andtech {
+namespace Andtech
+{
 
-	public static class Vector3IntExtensions {
+	public static class Vector3IntExtensions
+	{
 
 		/// <summary>
 		/// Selects components from a vector.
@@ -12,7 +14,8 @@ namespace Andtech {
 		/// <param name="y">New y component value.</param>
 		/// <param name="z">New z component value.</param>
 		/// <returns>A combination of the original and new values.</returns>
-		public static Vector3Int With(this Vector3Int original, int? x = null, int? y = null, int? z = null) => new Vector3Int {
+		public static Vector3Int With(this Vector3Int original, int? x = null, int? y = null, int? z = null) => new Vector3Int
+		{
 			x = x ?? original.x,
 			y = y ?? original.y,
 			z = z ?? original.z
@@ -23,8 +26,10 @@ namespace Andtech {
 		/// </summary>
 		/// <param name="vector">The vector to reverse.</param>
 		/// <returns>The reversed vector.</returns>
-		public static Vector3Int Reverse(this Vector3Int vector) {
-			return new Vector3Int() {
+		public static Vector3Int Reverse(this Vector3Int vector)
+		{
+			return new Vector3Int()
+			{
 				x = -vector.x,
 				y = -vector.y,
 				z = -vector.z
@@ -36,7 +41,8 @@ namespace Andtech {
 		/// </summary>
 		/// <param name="vector">The vector to reduce.</param>
 		/// <returns>The minimum equivalent vector.</returns>
-		public static Vector3Int Reduce(this Vector3Int vector) {
+		public static Vector3Int Reduce(this Vector3Int vector)
+		{
 			if (vector == Vector3Int.zero)
 			{
 				return Vector3Int.zero;
@@ -47,7 +53,8 @@ namespace Andtech {
 				Mathf.Abs(vector.y),
 				Mathf.Abs(vector.z)
 			);
-			return new Vector3Int() {
+			return new Vector3Int()
+			{
 				x = vector.x / gcd,
 				y = vector.y / gcd,
 				z = vector.z / gcd
@@ -60,8 +67,10 @@ namespace Andtech {
 		/// <param name="vector">The vector to reduce.</param>
 		/// <param name="count">The multiplier required to reconstruct the original vector.</param>
 		/// <returns>The minimum equivalent vector.</returns>
-		public static Vector3Int Reduce(this Vector3Int vector, out int scale) {
-			if (vector == Vector3Int.zero) {
+		public static Vector3Int Reduce(this Vector3Int vector, out int scale)
+		{
+			if (vector == Vector3Int.zero)
+			{
 				scale = 0;
 				return Vector3Int.zero;
 			}
@@ -73,8 +82,10 @@ namespace Andtech {
 			return reduced;
 		}
 
-		public static Vector2Int To2D(this Vector3Int vector) {
-			return new Vector2Int() {
+		public static Vector2Int To2D(this Vector3Int vector)
+		{
+			return new Vector2Int()
+			{
 				x = vector.x,
 				y = vector.y
 			};
@@ -85,14 +96,16 @@ namespace Andtech {
 		/// </summary>
 		/// <param name="vector">The vector to convert.</param>
 		/// <returns>The vector whose components are the signs of the components in <paramref name="vector"/>.</returns>
-		public static Vector3Int Sign(this Vector3Int vector) {
+		public static Vector3Int Sign(this Vector3Int vector)
+		{
 			vector.x = Sign(vector.x);
 			vector.y = Sign(vector.y);
 			vector.z = Sign(vector.z);
 			return vector;
 
 			#region LOCAL_FUNCTIONS
-			int Sign(int x) {
+			int Sign(int x)
+			{
 				if (x < 0)
 				{
 					return -1;

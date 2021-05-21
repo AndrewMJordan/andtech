@@ -1,11 +1,14 @@
 ﻿using UnityEngine;
 
-namespace Andtech {
+namespace Andtech
+{
 
-	public abstract class SubsystemBehaviour<T> : SingletonBehaviour<T> where T : SubsystemBehaviour<T> {
+	public abstract class SubsystemBehaviour<T> : SingletonBehaviour<T> where T : SubsystemBehaviour<T>
+	{
 		private static readonly ObserverSet<T> observers = new ObserverSet<T>();
 
-		static SubsystemBehaviour() {
+		static SubsystemBehaviour()
+		{
 			Commissioned += (sender, e) => observers.Set(e.Instance);
 			Decommissioned += (sender, e) => observers.Clear(e.Instance);
 		}

@@ -2,16 +2,20 @@
 using System.Diagnostics;
 using UnityEngine;
 
-namespace Andtech {
+namespace Andtech
+{
 
 	/// <summary>
 	/// Base class for defining singleton MonoBehaviours.
 	/// </summary>
 	/// <typeparam name="T">The type of the singleton instance.</typeparam>
 	[DebuggerStepThrough]
-	public abstract class SingletonBehaviour<T> : MonoBehaviour where T : SingletonBehaviour<T> {
-		public bool IsSingletonInstance {
-			get {
+	public abstract class SingletonBehaviour<T> : MonoBehaviour where T : SingletonBehaviour<T>
+	{
+		public bool IsSingletonInstance
+		{
+			get
+			{
 				if (slot is null)
 				{
 					return false;
@@ -33,8 +37,10 @@ namespace Andtech {
 		/// <summary>
 		/// The current singleton instance.
 		/// </summary>
-		public static T Instance {
-			get {
+		public static T Instance
+		{
+			get
+			{
 				if (!HasInstance)
 				{
 					throw new SingletonReferenceException(typeof(T));
@@ -47,9 +53,11 @@ namespace Andtech {
 
 		private static readonly Slot<T> slot;
 
-		static SingletonBehaviour() {
+		static SingletonBehaviour()
+		{
 			slot = new Slot<T>();
-			slot.OnValueChanged += (oldValue, newValue) => {
+			slot.OnValueChanged += (oldValue, newValue) =>
+			{
 				if (oldValue != null)
 				{
 					Decommissioned?.Invoke(null, new SingletonEventArgs { Instance = oldValue });
@@ -66,14 +74,16 @@ namespace Andtech {
 		internal static void ResetCache() => Instance = null;
 
 		#region MONOBEHAVIOUR
-		protected virtual void OnEnable() {
+		protected virtual void OnEnable()
+		{
 			if (!HasInstance)
 			{
 				Instance = this as T;
 			}
 		}
 
-		protected virtual void OnDisable() {
+		protected virtual void OnDisable()
+		{
 			if (IsSingletonInstance)
 			{
 				Instance = null;
@@ -93,7 +103,8 @@ namespace Andtech {
 		#endregion
 
 		#region TYPE
-		public class SingletonEventArgs : EventArgs {
+		public class SingletonEventArgs : EventArgs
+		{
 			public T Instance { get; internal set; }
 		}
 		#endregion

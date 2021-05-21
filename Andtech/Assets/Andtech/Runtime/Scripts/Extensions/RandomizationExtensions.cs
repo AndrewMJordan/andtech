@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Andtech {
+namespace Andtech
+{
 
 	[Flags]
-	public enum RandomizationOptions {
+	public enum RandomizationOptions
+	{
 		Infinite,
 		/// <summary>
 		/// Elements cannot be selected more than once.
@@ -24,7 +26,8 @@ namespace Andtech {
 	/// <returns>The random index.</returns>
 	public delegate int RandomIndex(int count);
 
-	public static class RandomizationExtensions {
+	public static class RandomizationExtensions
+	{
 
 		/// <summary>
 		/// Retrieves an element using pure randomness.
@@ -41,7 +44,8 @@ namespace Andtech {
 		/// <param name="collection">The set of elements to randomize.</param>
 		/// <param name="randomizer">The random index strategy.</param>
 		/// <returns>The randomly selected element.</returns>
-		public static T GetRandom<T>(this IEnumerable<T> collection, RandomIndex randomizer) {
+		public static T GetRandom<T>(this IEnumerable<T> collection, RandomIndex randomizer)
+		{
 			int n = collection.Count();
 			int index = randomizer(n);
 
@@ -100,20 +104,25 @@ namespace Andtech {
 		/// <param name="options">The parameters of randomization.</param>
 		/// <param name="randomizer">The random index strategy.</param>
 		/// <returns>The random sequence of elements.</returns>
-		public static IEnumerable<T> Randomize<T>(this IList<T> list, RandomizationOptions options, RandomIndex randomizer) {
+		public static IEnumerable<T> Randomize<T>(this IList<T> list, RandomizationOptions options, RandomIndex randomizer)
+		{
 			int n = list.Count;
 			int size = n;
 
-			while (size > 0) {
+			while (size > 0)
+			{
 				int index = randomizer(size);
 				T element = list[index];
 
-				if (options.HasFlag(RandomizationOptions.NoReplacement)) {
+				if (options.HasFlag(RandomizationOptions.NoReplacement))
+				{
 					size--;
 					Hide(index);
 				}
-				else {
-					if (options.HasFlag(RandomizationOptions.NoConsecutiveValues)) {
+				else
+				{
+					if (options.HasFlag(RandomizationOptions.NoConsecutiveValues))
+					{
 						size = n - 1;
 						Hide(index);
 					}
@@ -140,10 +149,12 @@ namespace Andtech {
 		/// <typeparam name="T">The type of the elements.</typeparam>
 		/// <param name="list">The set of elements to randomize.</param>
 		/// <param name="randomizer">The random index strategy.</param>
-		public static void Shuffle<T>(this IList<T> list, RandomIndex randomizer) {
+		public static void Shuffle<T>(this IList<T> list, RandomIndex randomizer)
+		{
 			int size = list.Count;
 
-			while (size > 0) {
+			while (size > 0)
+			{
 				int index = randomizer(size);
 				list.Swap(index, --size);
 			}

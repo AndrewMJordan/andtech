@@ -1,16 +1,19 @@
 ﻿using UnityEngine;
 
-namespace Andtech {
+namespace Andtech
+{
 
 	/// <summary>
 	/// Interpolates a single float.
 	/// </summary>
-	public class FloatInterpolator {
+	public class FloatInterpolator
+	{
 		public float Current { get; set; }
 		public float Target { get; set; }
 		public float MaxSpeed { get; set; } = Mathf.Infinity;
 		public float SmoothTime { get; set; } = 1.0F;
-		public float Velocity {
+		public float Velocity
+		{
 			get => velocity;
 			set => velocity = value;
 		}

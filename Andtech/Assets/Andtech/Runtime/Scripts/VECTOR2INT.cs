@@ -1,10 +1,12 @@
 ﻿
-namespace UnityEngine {
+namespace UnityEngine
+{
 
 	/// <summary>
 	/// Missing vector features. Note: if/when Unity adds these to their API, simply replace "VECTOR2INT" with Vector2Int.
 	/// </summary>
-	public static class VECTOR2INT {
+	public static class VECTOR2INT
+	{
 
 		/// <summary>
 		/// Dot product of two vectors.

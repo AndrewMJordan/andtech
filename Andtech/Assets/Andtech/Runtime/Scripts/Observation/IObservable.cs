@@ -1,7 +1,9 @@
 ﻿
-namespace Andtech {
+namespace Andtech
+{
 
-	public interface IObservable<T> {
+	public interface IObservable<T>
+	{
 
 		void Register(IObserver<T> observer);
 

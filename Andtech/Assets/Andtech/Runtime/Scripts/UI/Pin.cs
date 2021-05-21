@@ -1,26 +1,31 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Andtech {
+namespace Andtech
+{
 
-	public abstract class Pin : MonoBehaviour {
+	public abstract class Pin : MonoBehaviour
+	{
 		public RectTransform RectTransform => (RectTransform)transform;
 		public Func<Vector3> ScreenPointStrategy { get; set; }
 
 		private bool? isVisible;
 
 		#region MONOBEHAVIOUR
-		protected virtual void LateUpdate() {
+		protected virtual void LateUpdate()
+		{
 			Move();
 		}
 		#endregion
 
 		#region VIRTUAL
-		protected virtual void ApplyPosition(Vector3 position) {
+		protected virtual void ApplyPosition(Vector3 position)
+		{
 			SetScreenPosition(position);
 		}
 
-		protected void SetScreenPosition(Vector3 position) {
+		protected void SetScreenPosition(Vector3 position)
+		{
 			RectTransform.position = position;
 		}
 
@@ -34,13 +39,15 @@ namespace Andtech {
 		#endregion
 
 		#region PIPELINE
-		private void Move() {
+		private void Move()
+		{
 			var sp = ScreenPointStrategy?.Invoke() ?? Vector3.zero;
 			var isVisible = IsPointVisible(sp);
 			var same = isVisible == this.isVisible;
 			this.isVisible = isVisible;
 
-			if (!same) {
+			if (!same)
+			{
 				if (isVisible)
 				{
 					OnEnterScreen();
@@ -51,7 +58,8 @@ namespace Andtech {
 				}
 			}
 
-			if (isVisible) {
+			if (isVisible)
+			{
 				ApplyPosition(sp);
 			}
 		}

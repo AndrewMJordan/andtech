@@ -1,8 +1,10 @@
 ﻿using System;
 
-namespace Andtech {
+namespace Andtech
+{
 
-	public class SingletonReferenceException : Exception {
+	public class SingletonReferenceException : Exception
+	{
 		private const string DEFAULT_MESSAGE = "Singleton reference not set to an instance of an object";
 
 		public SingletonReferenceException() : base(DEFAULT_MESSAGE) { }

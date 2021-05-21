@@ -42,7 +42,8 @@ namespace Andtech.Tests
 			result = chain.Run(false);
 			Assert.IsFalse(false);
 
-			bool Passthrough(in bool x) {
+			bool Passthrough(in bool x)
+			{
 				return x;
 			}
 

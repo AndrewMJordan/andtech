@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace Andtech {
+namespace Andtech
+{
 
-	public static class Yielders {
+	public static class Yielders
+	{
 		private static readonly WaitForEndOfFrame waitForEndOfFrame = new WaitForEndOfFrame();
 		private static readonly WaitForFixedUpdate waitForFixedUpdate = new WaitForFixedUpdate();
 		private static readonly Dictionary<float, WaitForSeconds> waitForSecondsCache = new Dictionary<float, WaitForSeconds>(cacheSize, new FloatComparer());
@@ -18,9 +20,12 @@ namespace Andtech {
 
 		public static YieldInstruction WaitForEndOfFrame => waitForEndOfFrame;
 
-		public static WaitForSeconds WaitForSeconds(float duration) {
-			if (!waitForSecondsCache.TryGetValue(duration, out var wait)) {
-				if (accessQueue.Count >= cacheSize) {
+		public static WaitForSeconds WaitForSeconds(float duration)
+		{
+			if (!waitForSecondsCache.TryGetValue(duration, out var wait))
+			{
+				if (accessQueue.Count >= cacheSize)
+				{
 					var key = accessQueue.Dequeue();
 					waitForSecondsCache.Remove(key);
 				}
@@ -32,9 +37,12 @@ namespace Andtech {
 			return wait;
 		}
 
-		public static WaitForSecondsRealtime WaitForSecondsRealtime(float duration) {
-			if (!waitForSecondsRealtimeCache.TryGetValue(duration, out var wait)) {
-				if (accessQueueRealtime.Count >= cacheSize) {
+		public static WaitForSecondsRealtime WaitForSecondsRealtime(float duration)
+		{
+			if (!waitForSecondsRealtimeCache.TryGetValue(duration, out var wait))
+			{
+				if (accessQueueRealtime.Count >= cacheSize)
+				{
 					var key = accessQueueRealtime.Dequeue();
 					waitForSecondsRealtimeCache.Remove(key);
 				}
@@ -46,11 +54,14 @@ namespace Andtech {
 			return wait;
 		}
 
-		class FloatComparer : IEqualityComparer<float> {
-			bool IEqualityComparer<float>.Equals(float x, float y) {
+		class FloatComparer : IEqualityComparer<float>
+		{
+			bool IEqualityComparer<float>.Equals(float x, float y)
+			{
 				return x.CompareTo(y) == 0;
 			}
-			int IEqualityComparer<float>.GetHashCode(float obj) {
+			int IEqualityComparer<float>.GetHashCode(float obj)
+			{
 				return obj.GetHashCode();
 			}
 		}

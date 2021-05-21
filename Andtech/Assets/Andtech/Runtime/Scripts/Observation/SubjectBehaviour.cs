@@ -1,12 +1,14 @@
 ﻿using UnityEngine;
 
-namespace Andtech {
+namespace Andtech
+{
 
 	/// <summary>
 	/// Base class for subjects in OBSERVER pattern.
 	/// </summary>
 	/// <typeparam name="T">The type of the subject.</typeparam>
-	public abstract class SubjectBehaviour<T> : MonoBehaviour, IObservable<T> where T : SubjectBehaviour<T> {
+	public abstract class SubjectBehaviour<T> : MonoBehaviour, IObservable<T> where T : SubjectBehaviour<T>
+	{
 		private readonly ObserverSet<T> observers = new ObserverSet<T>();
 
 		#region MONOBEHAVIOUR

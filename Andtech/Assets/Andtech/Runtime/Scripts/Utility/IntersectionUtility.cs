@@ -1,12 +1,14 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Andtech {
+namespace Andtech
+{
 
 	/// <summary>
 	/// Useful intersection functions.
 	/// </summary>
-	public static class IntersectionUtility {
+	public static class IntersectionUtility
+	{
 
 		/// <summary>
 		/// Gets the position of the intersection between two rays.
@@ -16,7 +18,8 @@ namespace Andtech {
 		/// <param name="positionB">The origin of the second ray.</param>
 		/// <param name="directionB">The direction of the second ray.</param>
 		/// <returns>The world-space position of the intersection.</returns>
-		public static Vector2 GetIntersection(Vector2 positionA, Vector2 directionA, Vector2 positionB, Vector2 directionB) {
+		public static Vector2 GetIntersection(Vector2 positionA, Vector2 directionA, Vector2 positionB, Vector2 directionB)
+		{
 			Vector2 delta = positionB - positionA;
 
 			// Compute "determinant" term
@@ -43,7 +46,8 @@ namespace Andtech {
 		/// <param name="s">How much <paramref name="directionA"/> needed to be scaled.</param>
 		/// <param name="t">How much <paramref name="directionB"/> needed to be scaled.</param>
 		/// <returns>The world-space position of the intersection.</returns>
-		public static Vector2 GetIntersection(Vector2 positionA, Vector2 directionA, Vector2 positionB, Vector2 directionB, out float s, out float t) {
+		public static Vector2 GetIntersection(Vector2 positionA, Vector2 directionA, Vector2 positionB, Vector2 directionB, out float s, out float t)
+		{
 			Vector2 delta = positionB - positionA;
 
 			// Compute "determinant" term
@@ -70,7 +74,8 @@ namespace Andtech {
 		/// <param name="originB">The origin of the second segment.</param>
 		/// <param name="terminusB">The terminus of the second segment.</param>
 		/// <returns>The two line segments intersect in R^2.</returns>
-		public static bool Intersects(Vector2 originA, Vector2 terminusA, Vector2 originB, Vector2 terminusB) {
+		public static bool Intersects(Vector2 originA, Vector2 terminusA, Vector2 originB, Vector2 terminusB)
+		{
 			Vector2 directionA = terminusA - originA;
 			Vector2 directionB = terminusB - originB;
 			Vector2 delta = originB - originA;

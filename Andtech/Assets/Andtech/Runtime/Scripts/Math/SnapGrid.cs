@@ -1,17 +1,21 @@
 ﻿using UnityEngine;
 
-namespace Andtech {
+namespace Andtech
+{
 
 	/// <summary>
 	/// A grid which snaps positions to points.
 	/// </summary>
-	public class SnapGrid {
+	public class SnapGrid
+	{
 		/// <summary>
 		/// The distance between snap points.
 		/// </summary>
-		public Vector3 Scale {
+		public Vector3 Scale
+		{
 			get => scale;
-			set {
+			set
+			{
 				scale = value;
 				MarkDirty();
 			}
@@ -19,9 +23,11 @@ namespace Andtech {
 		/// <summary>
 		/// The central position where all snap points originate.
 		/// </summary>
-		public Vector3 Origin {
+		public Vector3 Origin
+		{
 			get => origin;
-			set {
+			set
+			{
 				origin = value;
 				MarkDirty();
 			}
@@ -29,9 +35,11 @@ namespace Andtech {
 		/// <summary>
 		/// Does the instance require a rebuild?
 		/// </summary>
-		public bool IsDirty {
+		public bool IsDirty
+		{
 			get => isDirty;
-			private set {
+			private set
+			{
 				isDirty = true;
 			}
 		}
@@ -54,7 +62,8 @@ namespace Andtech {
 		/// </summary>
 		/// <param name="scale">The distance between snap points.</param>
 		/// <param name="origin">The central position where all snap points originate.</param>
-		public SnapGrid(Vector3 scale, Vector3 origin) {
+		public SnapGrid(Vector3 scale, Vector3 origin)
+		{
 			Scale = scale;
 			Origin = origin;
 			Rebuild();
@@ -65,7 +74,8 @@ namespace Andtech {
 		/// </summary>
 		/// <param name="vector">The position (worldspace) to snap.</param>
 		/// <returns>The snapped vector.</returns>
-		public Vector3 Snap(Vector3 vector) {
+		public Vector3 Snap(Vector3 vector)
+		{
 			if (IsDirty)
 			{
 				Rebuild();
@@ -87,7 +97,8 @@ namespace Andtech {
 		/// <summary>
 		/// Rebuilds the snap grid after changing parameters.
 		/// </summary>
-		public void Rebuild() {
+		public void Rebuild()
+		{
 			// Remove snapping offset
 			Matrix4x4 prefixA = Matrix4x4.Translate(-origin);
 			// Normalize coordinates
