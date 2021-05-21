@@ -10,16 +10,20 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-namespace Andtech {
+namespace Andtech
+{
 
-	public static class CoroutineUtility {
+	public static class CoroutineUtility
+	{
 
 		/// <summary>
 		/// Returns an empty routine.
 		/// </summary>
 		/// <returns>An empty routine.</returns>
-		public static IEnumerator Empty {
-			get {
+		public static IEnumerator Empty
+		{
+			get
+			{
 				yield break;
 			}
 		}
@@ -30,22 +34,27 @@ namespace Andtech {
 		/// <param name="routine">The procedure to perform.</param>
 		/// <param name="delay">How many seconds to wait.</param>
 		/// <returns>The aggregated routine.</returns>
-		public static IEnumerator After(this IEnumerator routine, float delay) {
+		public static IEnumerator After(this IEnumerator routine, float delay)
+		{
 			yield return Delay(delay);
 			yield return routine;
 		}
 
-		public static IEnumerator Wait(this IEnumerator routine, float delay) {
+		public static IEnumerator Wait(this IEnumerator routine, float delay)
+		{
 			yield return routine;
 			yield return Yielders.WaitForSeconds(delay);
 		}
 
-		public static IEnumerator Delay(float delay) {
+		public static IEnumerator Delay(float delay)
+		{
 			yield return Yielders.WaitForSeconds(delay);
 		}
 
-		public static IEnumerator Lerp(float duration, Action<float> interpolator) {
-			foreach (var alpha in Tween.Linear(duration)) {
+		public static IEnumerator Lerp(float duration, Action<float> interpolator)
+		{
+			foreach (var alpha in Tween.Linear(duration))
+			{
 				interpolator(alpha);
 				yield return Yielders.WaitForPostUpdate;
 			}
@@ -57,7 +66,8 @@ namespace Andtech {
 		/// <param name="routine">The routine to perform.</param>
 		/// <param name="callback">The callback to perform.</param>
 		/// <returns>The aggregated routine.</returns>
-		public static IEnumerator Prepend(this IEnumerator routine, Action callback) {
+		public static IEnumerator Prepend(this IEnumerator routine, Action callback)
+		{
 			callback();
 			yield return routine;
 		}
@@ -68,7 +78,8 @@ namespace Andtech {
 		/// <param name="routine">The routine to perform.</param>
 		/// <param name="callback">The callback to perform.</param>
 		/// <returns>The aggregated routine.</returns>
-		public static IEnumerator Append(this IEnumerator routine, Action callback) {
+		public static IEnumerator Append(this IEnumerator routine, Action callback)
+		{
 			yield return routine;
 			callback();
 		}
@@ -79,7 +90,8 @@ namespace Andtech {
 		/// <param name="first">The first routine to perform.</param>
 		/// <param name="second">The second routine to perform.</param>
 		/// <returns>The aggregated routine.</returns>
-		public static IEnumerator Concat(this IEnumerator first, IEnumerator second) {
+		public static IEnumerator Concat(this IEnumerator first, IEnumerator second)
+		{
 			yield return first;
 			yield return second;
 		}
@@ -89,7 +101,8 @@ namespace Andtech {
 		/// </summary>
 		/// <param name="coroutine">The coroutine to convert.</param>
 		/// <returns>The routine.</returns>
-		public static IEnumerator ToEnumerator(this Coroutine coroutine) {
+		public static IEnumerator ToEnumerator(this Coroutine coroutine)
+		{
 			yield return coroutine;
 		}
 	}

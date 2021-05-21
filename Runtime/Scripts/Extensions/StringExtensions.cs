@@ -9,9 +9,11 @@
 using System.Text;
 using UnityEngine;
 
-namespace Andtech {
+namespace Andtech
+{
 
-	public static class StringExtensions {
+	public static class StringExtensions
+	{
 
 		/// <summary>
 		/// Wraps the text in html color tags.
@@ -36,11 +38,13 @@ namespace Andtech {
 		/// <param name="colorStart">The start color to use.</param>
 		/// <param name="colorEnd">The end color to use.</param>
 		/// <returns>The wrapped string.</returns>
-		public static string Color(this string text, Color colorStart, Color colorEnd) {
+		public static string Color(this string text, Color colorStart, Color colorEnd)
+		{
 			int n = text.Length;
 			var builder = new StringBuilder(n);
 
-			for (int i = 0; i < n; i++) {
+			for (int i = 0; i < n; i++)
+			{
 				var letter = text[i];
 				var alpha = (float)i / (n - 1);
 				var color = UnityEngine.Color.Lerp(colorStart, colorEnd, alpha);

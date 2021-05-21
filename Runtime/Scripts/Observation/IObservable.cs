@@ -6,9 +6,11 @@
  *	LICENSE file in the root directory of this source tree
  */
 
-namespace Andtech {
+namespace Andtech
+{
 
-	public interface IObservable<T> {
+	public interface IObservable<T>
+	{
 
 		void Register(IObserver<T> observer);
 

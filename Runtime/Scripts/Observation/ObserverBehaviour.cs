@@ -8,13 +8,15 @@
 
 using UnityEngine;
 
-namespace Andtech {
+namespace Andtech
+{
 
 	/// <summary>
 	/// Template for observing a target subject.
 	/// </summary>
 	/// <typeparam name="TSubsystem">The subject to target.</typeparam>
-	public abstract class ObserverBehaviour<T> : MonoBehaviour, IObserver<T> where T : SubjectBehaviour<T> {
+	public abstract class ObserverBehaviour<T> : MonoBehaviour, IObserver<T> where T : SubjectBehaviour<T>
+	{
 		public IObservable<T> Subject => subject;
 
 		[SerializeField]

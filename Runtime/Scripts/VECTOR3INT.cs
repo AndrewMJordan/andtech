@@ -6,12 +6,14 @@
  *	LICENSE file in the root directory of this source tree
  */
 
-namespace UnityEngine {
+namespace UnityEngine
+{
 
 	/// <summary>
 	/// Missing vector features. Note: if/when Unity adds these to their API, simply replace "VECTOR3INT" with Vector3Int.
 	/// </summary>
-	public static class VECTOR3INT {
+	public static class VECTOR3INT
+	{
 		public static Vector3Int forward => new Vector3Int(0, 0, 1);
 		public static Vector3Int back => new Vector3Int(0, 0, -1);
 
@@ -23,8 +25,10 @@ namespace UnityEngine {
 		/// <returns>The dot product.</returns>
 		public static int Dot(Vector3Int lhs, Vector3Int rhs) => lhs.x * rhs.x + lhs.y * rhs.y + lhs.z * rhs.z;
 
-		public static Vector3Int Cross(Vector3Int a, Vector3Int b) {
-			return new Vector3Int {
+		public static Vector3Int Cross(Vector3Int a, Vector3Int b)
+		{
+			return new Vector3Int
+			{
 				x = a.y * b.z - a.z * b.y,
 				y = a.z * b.x - a.x * b.z,
 				z = a.x * b.y - a.y * b.x

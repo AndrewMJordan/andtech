@@ -8,15 +8,18 @@
 
 using UnityEngine;
 
-namespace Andtech {
+namespace Andtech
+{
 
 	/// <summary>
 	/// Describes a region in 2D space.
 	/// </summary>
-	public struct Region {
+	public struct Region
+	{
 		public readonly Matrix4x4 transformation;
 
-		public Region(Vector2 origin, Vector2 basis0, Vector2 basis1) {
+		public Region(Vector2 origin, Vector2 basis0, Vector2 basis1)
+		{
 			transformation = MatrixUtility.GetLocalizationMatrix(origin, basis0, basis1);
 		}
 
@@ -25,7 +28,8 @@ namespace Andtech {
 		/// </summary>
 		/// <param name="point">The position of the point.</param>
 		/// <returns>The point overlaps the region (triangular).</returns>
-		public bool OverlapsTriangular(Vector2 point) {
+		public bool OverlapsTriangular(Vector2 point)
+		{
 			// Transform to "B coordinates"
 			Vector2 bCoordinates = transformation.MultiplyPoint3x4(point);
 
@@ -42,7 +46,8 @@ namespace Andtech {
 		/// </summary>
 		/// <param name="point">The position of the point.</param>
 		/// <returns>The point overlaps the region (rectangular).</returns>
-		public bool OverlapsRectangular(Vector2 point) {
+		public bool OverlapsRectangular(Vector2 point)
+		{
 			// Transform to "B coordinates"
 			Vector2 bCoordinates = transformation.MultiplyPoint3x4(point);
 

@@ -1,9 +1,9 @@
 {
 	"name": "com.andtech.core",
-	"version": "0.2.3",
 	"displayName": "Andtech",
-	"description": "Standard utility assets for Unity",
+	"version": "0.3.0",
 	"unity": "2019.4",
+	"description": "Standard utility assets for Unity",
 	"keywords": [
 		"andtech",
 		"utility",

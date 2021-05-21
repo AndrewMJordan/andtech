@@ -8,18 +8,22 @@
 
 using NUnit.Framework;
 
-namespace Andtech.Tests {
+namespace Andtech.Tests
+{
 
-	internal class ControlRandom {
+	internal class ControlRandom
+	{
 		private int[] order;
 		private int index;
 
-		public ControlRandom(params int[] order) {
+		public ControlRandom(params int[] order)
+		{
 			this.order = order;
 			index = 0;
 		}
 
-		public int GetRandom(int count) {
+		public int GetRandom(int count)
+		{
 			int element = order[index];
 			index = ++index % count;
 
@@ -27,11 +31,13 @@ namespace Andtech.Tests {
 		}
 	}
 
-	public static class RandomizationTests {
+	public static class RandomizationTests
+	{
 		private static readonly string[] ARRAY = new string[] { "ALPHA", "BETA", "GAMMA" };
 
 		[Test]
-		public static void TestGetRandom() {
+		public static void TestGetRandom()
+		{
 			var randomizer = new ControlRandom(0, 1, 2);
 
 			var array = ARRAY.Clone() as string[];

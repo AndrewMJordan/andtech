@@ -8,14 +8,17 @@
 
 using UnityEngine;
 
-namespace Andtech {
+namespace Andtech
+{
 
-	public static class DebugA {
+	public static class DebugA
+	{
 		public static float ArrowRatio { get; set; } = 0.125F;
 
 		public static void DrawArrow(Vector3 position, Vector3 direction) => DrawArrow(position, direction, Color.white);
 
-		public static void DrawArrow(Vector3 position, Vector3 direction, Color color, float duration = 0.0F, bool depthTest = true, float arrowRatio = 0.125F) {
+		public static void DrawArrow(Vector3 position, Vector3 direction, Color color, float duration = 0.0F, bool depthTest = true, float arrowRatio = 0.125F)
+		{
 			Quaternion rotation = Quaternion.LookRotation(direction);
 			var length = direction.magnitude;
 			Vector3 stick = new Vector3(0.0F, 0.0F, 1.0F);
@@ -33,7 +36,8 @@ namespace Andtech {
 
 		public static void DrawRectangle(Vector3 center, Vector3 size) => DrawRectangle(center, size, Color.white);
 
-		public static void DrawRectangle(Vector3 center, Vector3 size, Color color, float duration = 0.0F, bool depthTest = true) {
+		public static void DrawRectangle(Vector3 center, Vector3 size, Color color, float duration = 0.0F, bool depthTest = true)
+		{
 			var min = center - 0.5F * size;
 			var max = center + size;
 
@@ -42,7 +46,8 @@ namespace Andtech {
 
 		public static void DrawMinMaxRectangle(Vector3 min, Vector3 max) => DrawMinMaxRectangle(min, max, Color.white);
 
-		public static void DrawMinMaxRectangle(Vector3 min, Vector3 max, Color color, float duration = 0.0F, bool depthTest = true) {
+		public static void DrawMinMaxRectangle(Vector3 min, Vector3 max, Color color, float duration = 0.0F, bool depthTest = true)
+		{
 			var size = max - min;
 			var width = new Vector3(size.x, 0.0F, 0.0F);
 			var height = new Vector3(0.0F, size.y, 0.0F);

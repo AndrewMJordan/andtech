@@ -9,12 +9,14 @@
 using System.Runtime.CompilerServices;
 using UnityEngine;
 
-namespace Andtech {
+namespace Andtech
+{
 
 	/// <summary>
 	/// Standard easing functions.
 	/// </summary>
-	public static class Easing {
+	public static class Easing
+	{
 		private const float MIDPOINT = 0.5F;
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -75,8 +77,10 @@ namespace Andtech {
 		public static float EaseInOutPow(float t, float power) => EaseInOutPow(t, power, MIDPOINT);
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static float EaseInOutPow(float t, float power, float midpoint) {
-			if (t < midpoint) {
+		public static float EaseInOutPow(float t, float power, float midpoint)
+		{
+			if (t < midpoint)
+			{
 				return Mathf.Pow(t / midpoint, power) * midpoint;
 			}
 

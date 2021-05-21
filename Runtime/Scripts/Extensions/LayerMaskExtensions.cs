@@ -8,9 +8,11 @@
 
 using UnityEngine;
 
-namespace Andtech {
+namespace Andtech
+{
 
-	public static class LayerMaskExtensions {
+	public static class LayerMaskExtensions
+	{
 
 		/// <summary>
 		/// Determines whether a layer is set in the layer mask.

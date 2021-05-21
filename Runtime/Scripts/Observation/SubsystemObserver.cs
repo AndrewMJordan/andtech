@@ -8,13 +8,15 @@
 
 using UnityEngine;
 
-namespace Andtech {
+namespace Andtech
+{
 
 	/// <summary>
 	/// Template for observing a target subsystem.
 	/// </summary>
 	/// <typeparam name="TSubsystem">The subsystem to target.</typeparam>
-	public abstract class SubsystemObserver<TSubsystem> : MonoBehaviour, IObserver<TSubsystem> where TSubsystem : SubsystemBehaviour<TSubsystem> {
+	public abstract class SubsystemObserver<TSubsystem> : MonoBehaviour, IObserver<TSubsystem> where TSubsystem : SubsystemBehaviour<TSubsystem>
+	{
 
 		#region MONOBEHAVIOUR
 		protected virtual void OnEnable() => SubsystemBehaviour<TSubsystem>.Register(this);

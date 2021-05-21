@@ -10,12 +10,14 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Andtech {
+namespace Andtech
+{
 
 	/// <summary>
 	/// Standard tweening functions.
 	/// </summary>
-	public static class Tween {
+	public static class Tween
+	{
 
 		/// <summary>
 		/// Generates tweening values using scaled time.
@@ -33,8 +35,10 @@ namespace Andtech {
 		/// <returns>Tweening values [0, 1] from the function.</returns>
 		public static IEnumerable<float> GenerateRealtime(Func<float, float> easingFunction, float duration) => Generate(easingFunction, duration, () => Time.unscaledDeltaTime);
 
-		private static IEnumerable<float> Generate(Func<float, float> easingFunction, float duration, Func<float> getDeltaTime) {
-			for (float t = 0.0F; t < duration; t += getDeltaTime()) {
+		private static IEnumerable<float> Generate(Func<float, float> easingFunction, float duration, Func<float> getDeltaTime)
+		{
+			for (float t = 0.0F; t < duration; t += getDeltaTime())
+			{
 				yield return easingFunction(t / duration);
 			}
 

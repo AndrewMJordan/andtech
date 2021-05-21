@@ -99,7 +99,9 @@ namespace Andtech
 			int lastGCD = values[0];
 			int n = values.Length;
 			for (int i = 1; i < n; i++)
+			{
 				lastGCD = GCD(lastGCD, values[i]);
+			}
 
 			return lastGCD;
 		}

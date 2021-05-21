@@ -10,67 +10,125 @@ using System;
 using System.Diagnostics;
 using UnityEngine;
 
-namespace Andtech {
+namespace Andtech
+{
+
 
 	/// <summary>
 	/// Base class for defining singleton MonoBehaviours.
 	/// </summary>
 	/// <typeparam name="T">The type of the singleton instance.</typeparam>
 	[DebuggerStepThrough]
-	public abstract class SingletonBehaviour<T> : MonoBehaviour where T : SingletonBehaviour<T> {
-		public bool IsSingletonInstance {
-			get {
-				if (slot is null)
-					return false;
-
+	public abstract class SingletonBehaviour : MonoBehaviour
+	{
+		/// <summary>
+		/// There exists a singleton instance.
+		/// </summary>
+		public static bool HasInstance => slot.HasValue;
+		/// <summary>
+		/// Is this the current singleton instance?
+		/// </summary>
+		public bool IsSingletonInstance
+		{
+			get
+			{
 				if (!slot.HasValue)
+				{
 					return false;
+				}
 
 				return ReferenceEquals(this, Instance);
 			}
 		}
-
-		/// <summary>
-		/// The type has a commissioned instance.
-		/// </summary>
-		public static bool HasInstance => slot.HasValue;
 		/// <summary>
 		/// The current singleton instance.
 		/// </summary>
-		public static T Instance {
-			get {
-				if (!HasInstance)
-					throw new SingletonReferenceException(typeof(T));
+		public static SingletonBehaviour Instance
+		{
+			get => slot.Value;
+			protected set => slot.Value = value;
+		}
+		protected static Slot<SingletonBehaviour> Slot => slot;
 
-				return slot.Value;
-			}
-			set => slot.Value = value;
+		private static readonly Slot<SingletonBehaviour> slot = new Slot<SingletonBehaviour>();
+
+		/// <summary>
+		/// Initializes the singleton environment.
+		/// </summary>
+		/// <remarks>Note: <see cref="RuntimeInitializeOnLoadMethodAttribute"/> may not work on generic <see cref="MonoBehaviour"/>s.</remarks>
+		[RuntimeInitializeOnLoadMethod]
+		internal static void InitializeOnLoad()
+		{
+			Instance = null;
+			InitializedOnLoad?.Invoke();
 		}
 
-		private static readonly Slot<T> slot;
+		protected void SetInstance(SingletonBehaviour instance)
+		{
+			if (!HasInstance)
+			{
+				Instance = instance;
+			}
+		}
 
-		static SingletonBehaviour() {
-			slot = new Slot<T>();
-			slot.Replaced += (sender, e) => {
-				if (e.OldValue != null)
-					Decommissioned?.Invoke(null, new SingletonEventArgs { Instance = e.OldValue });
-				if (e.NewValue != null)
-					Commissioned?.Invoke(null, new SingletonEventArgs { Instance = e.NewValue });
+		protected void ClearInstance(SingletonBehaviour instance)
+		{
+			if (instance.IsSingletonInstance)
+			{
+				Instance = null;
+			}
+		}
+
+		#region MONOBEHAVIOUR
+		protected virtual void OnEnable() => SetInstance(this);
+
+		protected virtual void OnDisable() => ClearInstance(this);
+		#endregion
+
+		#region EVENT
+		/// <summary>
+		/// Use this to receive <see cref="RuntimeInitializeOnLoadMethodAttribute"/> callbacks.
+		/// </summary>
+		public static event Action InitializedOnLoad;
+		#endregion
+	}
+
+	public abstract partial class SingletonBehaviour<T> : SingletonBehaviour where T : SingletonBehaviour<T>
+	{
+		public static new T Instance {
+			get
+			{
+				if (HasInstance)
+				{
+					return (T)SingletonBehaviour.Instance;
+				}
+
+				throw new SingletonReferenceException(typeof(T));
+			}
+			protected set => SingletonBehaviour.Instance = value;
+		}
+
+		static SingletonBehaviour()
+		{
+			Slot.OnValueChanged += (oldValue, newValue) =>
+			{
+				if (oldValue != null)
+				{
+					Decommissioned?.Invoke(null, new SingletonEventArgs((T)oldValue));
+				}
+				if (newValue != null)
+				{
+					Commissioned?.Invoke(null, new SingletonEventArgs((T)newValue));
+				}
 			};
 		}
 
-		[RuntimeInitializeOnLoadMethod]
-		internal static void ResetCache() => Instance = null;
+		#region TYPE
+		public class SingletonEventArgs : EventArgs
+		{
+			public readonly T Instance;
 
-		#region MONOBEHAVIOUR
-		protected virtual void OnEnable() {
-			if (!HasInstance)
-				Instance = this as T;
-		}
-
-		protected virtual void OnDisable() {
-			if (IsSingletonInstance)
-				Instance = null;
+			public SingletonEventArgs(T instance) => Instance = instance;
 		}
 		#endregion
 
@@ -83,12 +141,6 @@ namespace Andtech {
 		/// The former singleton instance became inactive.
 		/// </summary>
 		public static event EventHandler<SingletonEventArgs> Decommissioned;
-		#endregion
-
-		#region TYPE
-		public class SingletonEventArgs : EventArgs {
-			public T Instance { get; internal set; }
-		}
 		#endregion
 	}
 }

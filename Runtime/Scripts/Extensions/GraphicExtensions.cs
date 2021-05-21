@@ -9,9 +9,11 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Andtech {
+namespace Andtech
+{
 
-	public static class GraphicExtensions {
+	public static class GraphicExtensions
+	{
 
 		public static void SetColor(this Graphic graphic, Color color) => graphic.color = color;
 	}

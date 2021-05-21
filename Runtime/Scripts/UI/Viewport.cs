@@ -8,10 +8,13 @@
 
 using UnityEngine;
 
-namespace Andtech {
+namespace Andtech
+{
 
-	public class Viewport : MonoBehaviour {
-		public Camera Camera {
+	public class Viewport : MonoBehaviour
+	{
+		public Camera Camera
+		{
 			get => camera;
 			set => camera = value;
 		}
@@ -22,10 +25,14 @@ namespace Andtech {
 		private Matrix4x4 screenToAnchor;
 		private Matrix4x4 anchorToScreen;
 		private Vector2 screenCenter;
-		private RectTransform RectTransform {
-			get {
+		private RectTransform RectTransform
+		{
+			get
+			{
 				if (!rectTransform)
+				{
 					rectTransform = transform as RectTransform;
+				}
 
 				return rectTransform;
 			}
@@ -37,7 +44,8 @@ namespace Andtech {
 		private const float MAX_RADIUS = 0.5F;
 		private static readonly Vector2 HALF = new Vector2(0.5F, 0.5F);
 
-		public bool Contains(Vector3 point) {
+		public bool Contains(Vector3 point)
+		{
 			return camera.pixelRect.Contains(point);
 		}
 
@@ -45,8 +53,10 @@ namespace Andtech {
 
 		public Vector3 WorldToViewportPoint(Vector3 position) => camera.WorldToViewportPoint(position);
 
-		public Vector3 GetCorrectedPosition(Vector3 screenPosition) {
-			if (screenPosition.z < 0.0F) {
+		public Vector3 GetCorrectedPosition(Vector3 screenPosition)
+		{
+			if (screenPosition.z < 0.0F)
+			{
 				var d = (Vector2)screenPosition - screenCenter;
 				screenPosition = screenCenter + -d;
 			}
@@ -54,7 +64,8 @@ namespace Andtech {
 			return screenPosition;
 		}
 
-		public Vector2 GetRadius(Vector2 screenPosition) {
+		public Vector2 GetRadius(Vector2 screenPosition)
+		{
 			var anchorCoordinates = (Vector2)screenToAnchor.MultiplyPoint3x4(screenPosition);
 			var radius = anchorCoordinates - HALF;
 
@@ -64,7 +75,8 @@ namespace Andtech {
 			return position;
 		}
 
-		public bool Truncate(Vector2 screenPosition, out Vector2 position) {
+		public bool Truncate(Vector2 screenPosition, out Vector2 position)
+		{
 			var anchorCoordinates = (Vector2)screenToAnchor.MultiplyPoint3x4(screenPosition);
 			var radius = anchorCoordinates - HALF;
 
@@ -75,7 +87,8 @@ namespace Andtech {
 		}
 
 		#region MONOBEHAVIOUR
-		protected virtual void OnRectTransformDimensionsChange() {
+		protected virtual void OnRectTransformDimensionsChange()
+		{
 			RectTransform.GetWorldCorners(corners);
 			var basis0 = corners[3] - corners[0];
 			var basis1 = corners[1] - corners[0];
@@ -89,18 +102,22 @@ namespace Andtech {
 		#endregion
 
 		#region PIPELINE
-		private Vector2 TruncateCircular(Vector2 radius) {
+		private Vector2 TruncateCircular(Vector2 radius)
+		{
 			return HALF + Vector2.ClampMagnitude(radius, MAX_RADIUS);
 		}
 
-		private Vector2 TruncateRectangular(Vector2 radius) {
-			return new Vector2 {
+		private Vector2 TruncateRectangular(Vector2 radius)
+		{
+			return new Vector2
+			{
 				x = Mathf.Clamp01(HALF.x + radius.x),
 				y = Mathf.Clamp01(HALF.y + radius.y)
 			};
 		}
 
-		private Vector2 MaximizeRadius(Vector2 radius) {
+		private Vector2 MaximizeRadius(Vector2 radius)
+		{
 			return HALF + radius.normalized * MAX_RADIUS;
 		}
 		#endregion

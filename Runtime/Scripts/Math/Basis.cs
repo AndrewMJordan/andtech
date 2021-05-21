@@ -8,18 +8,23 @@
 
 using UnityEngine;
 
-namespace Andtech {
+namespace Andtech
+{
 
 	/// <summary>
 	/// A 3D subspace.
 	/// </summary>
-	public class Basis {
+	public class Basis
+	{
 		public Vector3 Origin => Globalization.GetColumn(3);
 		public Quaternion Rotation => Globalization.rotation;
 		public Vector3 Scale => Globalization.lossyScale;
-		public Vector3 this[int index] {
-			get {
-				switch (index) {
+		public Vector3 this[int index]
+		{
+			get
+			{
+				switch (index)
+				{
 					case 0:
 						return Globalization.MultiplyVector(Vector3.right);
 					case 1:
@@ -37,7 +42,8 @@ namespace Andtech {
 
 		public Basis(Vector3 basis0, Vector3 basis1, Vector3 basis2) : this(basis0, basis1, basis2, Vector3.zero) { }
 
-		public Basis(Vector3 basis0, Vector3 basis1, Vector3 basis2, Vector3 origin) {
+		public Basis(Vector3 basis0, Vector3 basis1, Vector3 basis2, Vector3 origin)
+		{
 			Localization = MatrixUtility.GetLocalizationMatrix(basis0, basis1, basis2, origin);
 			Globalization = Localization.inverse;
 		}

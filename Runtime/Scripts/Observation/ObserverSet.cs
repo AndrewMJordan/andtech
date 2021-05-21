@@ -8,47 +8,83 @@
 
 using System.Collections.Generic;
 
-namespace Andtech {
+namespace Andtech
+{
 
-	public class ObserverSet<T> {
-		public T Subject {
+	public class ObserverSet<T>
+	{
+		public T Subject
+		{
 			get => subject;
-			private set {
+			private set
+			{
 				var oldValue = Subject;
 				var newValue = value;
 				var same = ReferenceEquals(newValue, oldValue);
 				if (same)
+				{
 					return;
+				}
 
-				if (oldValue != null) {
+				Lock();
+				if (oldValue != null)
+				{
 					foreach (var observer in observers)
-						observer.OnUnregister(oldValue);
+					{
+						try
+						{
+							observer.OnUnregister(oldValue);
+						}
+						catch { }
+					}
 				}
 				subject = newValue;
-				if (newValue != null) {
+				if (newValue != null)
+				{
 					foreach (var observer in observers)
-						observer.OnRegister(Subject);
+					{
+						try
+						{
+							observer.OnRegister(newValue);
+						}
+						catch { }
+					}
 				}
+				Unlock();
+				observers.Flush();
 			}
 		}
 		public bool HasSubject => Subject != null;
 
+		private bool isLocked;
 		private T subject;
+		private readonly DeferCollection<IObserver<T>> observers;
 
-		private readonly HashSet<IObserver<T>> observers = new HashSet<IObserver<T>>();
-
-		public void Set(T instance) {
-			if (HasSubject)
-				return;
-
-			Subject = instance;
+		public ObserverSet()
+		{
+			var hashSet = new HashSet<IObserver<T>>();
+			observers = new DeferCollection<IObserver<T>>(hashSet);
 		}
 
-		public void Clear(T instance) {
-			if (instance.Equals(Subject))
+		public void Set(T instance)
+		{
+			if (!HasSubject)
+			{
+				Subject = instance;
+			}
+		}
+
+		public void Clear(T instance)
+		{
+			if (ReferenceEquals(instance, Subject))
+			{
 				Subject = default;
+			}
 		}
 
+		/// <summary>
+		/// Clears the list of observers.
+		/// </summary>
 		public void Clear() => observers.Clear();
 
 		/// <summary>
@@ -56,15 +92,22 @@ namespace Andtech {
 		/// </summary>
 		/// <param name="observer">The observer to add.</param>
 		/// <returns>The observer was successfully added.</returns>
-		/// <remarks>The observer will be immediately receive registration callbacks if the subject is already enabled.</remarks>
-		public bool Add(IObserver<T> observer) {
-			if (!observers.Add(observer))
+		/// <remarks>The observer will be immediately receive registration callbacks if the subject is already active.</remarks>
+		public bool Add(IObserver<T> observer)
+		{
+			if (!observers.CanAdd(observer))
+			{
 				return false;
+			}
+
+			observers.Add(observer);
 
 			// Late registration
-			//	If the observer is added while the subject is enabled, let observer respond to the registration.
-			if (HasSubject)
+			//	If the observer is added while the subject is active, let observer respond to the registration.
+			if (!isLocked && HasSubject)
+			{
 				observer.OnRegister(Subject);
+			}
 
 			return true;
 		}
@@ -74,15 +117,36 @@ namespace Andtech {
 		/// </summary>
 		/// <param name="observer">The observer to remove.</param>
 		/// <returns>The observer was successfully removed.</returns>
-		/// <remarks>The observer will be immediately receive registration callbacks if the subject is currently enabled.</remarks>
-		public bool Remove(IObserver<T> observer) {
-			if (!observers.Remove(observer))
+		/// <remarks>The observer will be immediately receive registration callbacks if the subject is currently active.</remarks>
+		public bool Remove(IObserver<T> observer)
+		{
+			if (!observers.CanRemove(observer))
+			{
 				return false;
+			}
 
-			if (HasSubject)
+			observers.Remove(observer);
+
+			// Early unregistration
+			//	If the observer is removed while the subject is still active, let observer respond to the unregistration.
+			if (!isLocked && HasSubject)
+			{
 				observer.OnUnregister(Subject);
+			}
 
 			return true;
+		}
+
+		private void Lock()
+		{
+			isLocked = true;
+			observers.Lock();
+		}
+
+		private void Unlock()
+		{
+			isLocked = false;
+			observers.Unlock();
 		}
 	}
 }

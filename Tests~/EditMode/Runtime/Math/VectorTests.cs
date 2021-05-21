@@ -9,12 +9,15 @@
 using NUnit.Framework;
 using UnityEngine;
 
-namespace Andtech.Tests {
+namespace Andtech.Tests
+{
 
-	public static class VectorTests {
+	public static class VectorTests
+	{
 
 		[Test]
-		public static void TestCrossProduct() {
+		public static void TestCrossProduct()
+		{
 			var right = Vector3Int.right;
 			var left = Vector3Int.left;
 			var down = Vector3Int.down;

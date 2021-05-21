@@ -6,14 +6,16 @@
  *	LICENSE file in the root directory of this source tree
  */
 
-using UnityEngine;
+namespace Andtech
+{
 
-namespace Andtech {
-
-	public abstract class SubsystemBehaviour<T> : SingletonBehaviour<T> where T : SubsystemBehaviour<T> {
+	public abstract class SubsystemBehaviour<T> : SingletonBehaviour<T> where T : SubsystemBehaviour<T>
+	{
 		private static readonly ObserverSet<T> observers = new ObserverSet<T>();
 
-		static SubsystemBehaviour() {
+		static SubsystemBehaviour()
+		{
+			InitializedOnLoad += () => observers?.Clear();
 			Commissioned += (sender, e) => observers.Set(e.Instance);
 			Decommissioned += (sender, e) => observers.Clear(e.Instance);
 		}
@@ -33,8 +35,5 @@ namespace Andtech {
 		/// <returns>The observer was successfully removed.</returns>
 		/// <remarks>The observer will be immediately receive registration callbacks if the subsystem is currently active.</remarks>
 		public static bool Unregister(IObserver<T> observer) => observers.Remove(observer);
-
-		[RuntimeInitializeOnLoadMethod]
-		internal static void ResetCache() => observers?.Clear();
 	}
 }

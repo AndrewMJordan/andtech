@@ -8,9 +8,11 @@
 
 using UnityEngine;
 
-namespace Andtech {
+namespace Andtech
+{
 
-	public static class MatrixUtility {
+	public static class MatrixUtility
+	{
 
 		/// <summary>
 		/// Returns a matrix which transforms from relative to world coordinates.
@@ -29,7 +31,8 @@ namespace Andtech {
 		/// <param name="basis1">The system's "Z axis".</param>
 		/// <param name="position">The system's origin (world space).</param>
 		/// <returns>The transformation matrix.</returns>
-		public static Matrix4x4 GetGlobalizationMatrix(Vector3 basis0, Vector3 basis1, Vector3 basis2, Vector3 position) {
+		public static Matrix4x4 GetGlobalizationMatrix(Vector3 basis0, Vector3 basis1, Vector3 basis2, Vector3 position)
+		{
 			Matrix4x4 translation = Matrix4x4.Translate(position);
 			Matrix4x4 b = new Matrix4x4(basis0, basis1, basis2, new Vector4(0.0F, 0.0F, 0.0F, 1.0F));
 			return translation * b;
