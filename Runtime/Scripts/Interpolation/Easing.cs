@@ -31,6 +31,9 @@ namespace Andtech
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static float EaseInOutQuadratic(float t) => EaseInOutPow(t, 2.0F);
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static float EaseOutInQuadratic(float t) => EaseOutInPow(t, 2.0F);
 		#endregion
 
 		#region Cubic
@@ -42,6 +45,9 @@ namespace Andtech
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static float EaseInOutCubic(float t) => EaseInOutPow(t, 3.0F);
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static float EaseOutInCubic(float t) => EaseOutInPow(t, 3.0F);
 		#endregion
 
 		#region Quartic
@@ -53,6 +59,9 @@ namespace Andtech
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static float EaseInOutQuartic(float t) => EaseInOutPow(t, 4.0F);
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static float EaseOutInQuartic(float t) => EaseOutInPow(t, 4.0F);
 		#endregion
 
 		#region Quintic
@@ -64,6 +73,9 @@ namespace Andtech
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static float EaseInOutQuintic(float t) => EaseInOutPow(t, 5.0F);
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static float EaseOutInQuintic(float t) => EaseOutInPow(t, 5.0F);
 		#endregion
 
 		#region Pow
@@ -74,17 +86,25 @@ namespace Andtech
 		public static float EaseOutPow(float t, float power) => 1.0F - EaseInPow(1.0F - t, power);
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static float EaseInOutPow(float t, float power) => EaseInOutPow(t, power, MIDPOINT);
-
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static float EaseInOutPow(float t, float power, float midpoint)
+		public static float EaseInOutPow(float t, float power)
 		{
-			if (t < midpoint)
+			if (t < MIDPOINT)
 			{
-				return Mathf.Pow(t / midpoint, power) * midpoint;
+				return Mathf.Pow(2.0f * t, power) / 2.0f;
 			}
 
-			return 1.0F - Mathf.Pow((1.0F - t) / (1.0F - midpoint), power) * (1.0F - midpoint);
+			return 1.0f - Mathf.Pow(-2.0f * t + 2.0f, power) / 2.0f;
+		}
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static float EaseOutInPow(float t, float power)
+		{
+			if (t < MIDPOINT)
+			{
+				return (1.0f - Mathf.Pow(-2.0f * t + 1.0f, power)) / 2.0f;
+			}
+
+			return (1.0f + Mathf.Pow(2.0f * t - 1.0f, power)) / 2.0f;
 		}
 		#endregion
 	}

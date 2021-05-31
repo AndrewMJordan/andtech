@@ -25,7 +25,15 @@ namespace Andtech
 		/// <param name="easingFunction">The function to evaluate. Evaluated values should be on the range [0, 1].</param>
 		/// <param name="duration">The duration of the animation.</param>
 		/// <returns>Tweening values [0, 1] from the function.</returns>
-		public static IEnumerable<float> Generate(Func<float, float> easingFunction, float duration) => Generate(easingFunction, duration, () => Time.deltaTime);
+		public static IEnumerable<float> Generate(Func<float, float> easingFunction, float duration)
+		{
+			for (float t = 0.0F; t < duration; t += Time.deltaTime)
+			{
+				yield return easingFunction(t / duration);
+			}
+
+			yield return easingFunction(1.0F);
+		}
 
 		/// <summary>
 		/// Generates tweening values using unscaled time.
@@ -33,11 +41,9 @@ namespace Andtech
 		/// <param name="easingFunction">The function to evaluate. Evaluated values should be on the range [0, 1].</param>
 		/// <param name="duration">The duration of the animation.</param>
 		/// <returns>Tweening values [0, 1] from the function.</returns>
-		public static IEnumerable<float> GenerateRealtime(Func<float, float> easingFunction, float duration) => Generate(easingFunction, duration, () => Time.unscaledDeltaTime);
-
-		private static IEnumerable<float> Generate(Func<float, float> easingFunction, float duration, Func<float> getDeltaTime)
+		public static IEnumerable<float> GenerateRealtime(Func<float, float> easingFunction, float duration)
 		{
-			for (float t = 0.0F; t < duration; t += getDeltaTime())
+			for (float t = 0.0F; t < duration; t += Time.fixedDeltaTime)
 			{
 				yield return easingFunction(t / duration);
 			}
@@ -61,6 +67,10 @@ namespace Andtech
 		public static IEnumerable<float> EaseInOutQuadratic(float duration) => Generate(Easing.EaseInOutQuadratic, duration);
 
 		public static IEnumerable<float> EaseInOutQuadraticRealtime(float duration) => GenerateRealtime(Easing.EaseInOutQuadratic, duration);
+
+		public static IEnumerable<float> EaseOutInQuadratic(float duration) => Generate(Easing.EaseOutInQuadratic, duration);
+
+		public static IEnumerable<float> EaseOutInQuadraticRealtime(float duration) => GenerateRealtime(Easing.EaseOutInQuadratic, duration);
 		#endregion
 
 		#region Cubic
@@ -75,6 +85,10 @@ namespace Andtech
 		public static IEnumerable<float> EaseInOutCubic(float duration) => Generate(Easing.EaseInOutCubic, duration);
 
 		public static IEnumerable<float> EaseInOutCubicRealtime(float duration) => GenerateRealtime(Easing.EaseInOutCubic, duration);
+
+		public static IEnumerable<float> EaseOutInCubic(float duration) => Generate(Easing.EaseOutInCubic, duration);
+
+		public static IEnumerable<float> EaseOutInCubicRealtime(float duration) => GenerateRealtime(Easing.EaseOutInCubic, duration);
 		#endregion
 
 		#region Quartic
@@ -89,6 +103,10 @@ namespace Andtech
 		public static IEnumerable<float> EaseInOutQuartic(float duration) => Generate(Easing.EaseInOutQuartic, duration);
 
 		public static IEnumerable<float> EaseInOutQuarticRealtime(float duration) => GenerateRealtime(Easing.EaseInOutQuartic, duration);
+
+		public static IEnumerable<float> EaseOutInQuartic(float duration) => Generate(Easing.EaseOutInQuartic, duration);
+
+		public static IEnumerable<float> EaseOutInQuarticRealtime(float duration) => GenerateRealtime(Easing.EaseOutInQuartic, duration);
 		#endregion
 
 		#region Quintic
@@ -103,6 +121,10 @@ namespace Andtech
 		public static IEnumerable<float> EaseInOutQuintic(float duration) => Generate(Easing.EaseInOutQuintic, duration);
 
 		public static IEnumerable<float> EaseInOutQuinticRealtime(float duration) => GenerateRealtime(Easing.EaseInOutQuintic, duration);
+
+		public static IEnumerable<float> EaseOutInQuintic(float duration) => Generate(Easing.EaseOutInQuintic, duration);
+
+		public static IEnumerable<float> EaseOutInQuinticRealtime(float duration) => GenerateRealtime(Easing.EaseOutInQuintic, duration);
 		#endregion
 
 		#region Pow
@@ -117,6 +139,10 @@ namespace Andtech
 		public static IEnumerable<float> EaseInOutPow(float duration, float power) => Generate(x => Easing.EaseInOutPow(x, power), duration);
 
 		public static IEnumerable<float> EaseInOutPowRealtime(float duration, float power) => GenerateRealtime(x => Easing.EaseInOutPow(x, power), duration);
+
+		public static IEnumerable<float> EaseOutInPow(float duration, float power) => Generate(x => Easing.EaseOutInPow(x, power), duration);
+
+		public static IEnumerable<float> EaseOutInPowRealtime(float duration, float power) => GenerateRealtime(x => Easing.EaseOutInPow(x, power), duration);
 		#endregion
 	}
 }
