@@ -35,7 +35,7 @@ namespace Andtech
 		/// <returns>Tweening values [0, 1] from the function.</returns>
 		public static IEnumerable<float> GenerateRealtime(Func<float, float> easingFunction, float duration)
 		{
-			for (float t = 0.0F; t < duration; t += Time.fixedDeltaTime)
+			for (float t = 0.0F; t < duration; t += Time.unscaledDeltaTime)
 			{
 				yield return easingFunction(t / duration);
 			}
