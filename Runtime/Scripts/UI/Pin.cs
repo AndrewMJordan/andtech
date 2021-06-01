@@ -12,65 +12,65 @@ using UnityEngine;
 namespace Andtech
 {
 
-	public abstract class Pin : MonoBehaviour
-	{
-		public RectTransform RectTransform => (RectTransform)transform;
-		public Func<Vector3> ScreenPointStrategy { get; set; }
+    public abstract class Pin : MonoBehaviour
+    {
+        public RectTransform RectTransform => (RectTransform)transform;
+        public Func<Vector3> ScreenPointStrategy { get; set; }
 
-		private bool? isVisible;
+        private bool? isVisible;
 
-		#region MONOBEHAVIOUR
-		protected virtual void LateUpdate()
-		{
-			Move();
-		}
-		#endregion
+        #region MONOBEHAVIOUR
+        protected virtual void LateUpdate()
+        {
+            Move();
+        }
+        #endregion
 
-		#region VIRTUAL
-		protected virtual void ApplyPosition(Vector3 position)
-		{
-			SetScreenPosition(position);
-		}
+        #region VIRTUAL
+        protected virtual void ApplyPosition(Vector3 position)
+        {
+            SetScreenPosition(position);
+        }
 
-		protected void SetScreenPosition(Vector3 position)
-		{
-			RectTransform.position = position;
-		}
+        protected void SetScreenPosition(Vector3 position)
+        {
+            RectTransform.position = position;
+        }
 
-		protected virtual void OnEnterScreen() => RectTransform.localScale = Vector3.one;
+        protected virtual void OnEnterScreen() => RectTransform.localScale = Vector3.one;
 
-		protected virtual void OnExitScreen() => RectTransform.localScale = Vector3.zero;
-		#endregion
+        protected virtual void OnExitScreen() => RectTransform.localScale = Vector3.zero;
+        #endregion
 
-		#region ABSTRACT
-		protected abstract bool IsPointVisible(Vector3 sp);
-		#endregion
+        #region ABSTRACT
+        protected abstract bool IsPointVisible(Vector3 sp);
+        #endregion
 
-		#region PIPELINE
-		private void Move()
-		{
-			var sp = ScreenPointStrategy?.Invoke() ?? Vector3.zero;
-			var isVisible = IsPointVisible(sp);
-			var same = isVisible == this.isVisible;
-			this.isVisible = isVisible;
+        #region PIPELINE
+        private void Move()
+        {
+            var sp = ScreenPointStrategy?.Invoke() ?? Vector3.zero;
+            var isVisible = IsPointVisible(sp);
+            var same = isVisible == this.isVisible;
+            this.isVisible = isVisible;
 
-			if (!same)
-			{
-				if (isVisible)
-				{
-					OnEnterScreen();
-				}
-				else
-				{
-					OnExitScreen();
-				}
-			}
+            if (!same)
+            {
+                if (isVisible)
+                {
+                    OnEnterScreen();
+                }
+                else
+                {
+                    OnExitScreen();
+                }
+            }
 
-			if (isVisible)
-			{
-				ApplyPosition(sp);
-			}
-		}
-		#endregion
-	}
+            if (isVisible)
+            {
+                ApplyPosition(sp);
+            }
+        }
+        #endregion
+    }
 }

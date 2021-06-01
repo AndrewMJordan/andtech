@@ -9,11 +9,11 @@
 namespace Andtech
 {
 
-	public interface IObservable<T>
-	{
+    public interface IObservable<T>
+    {
 
-		void Register(IObserver<T> observer);
+        void Register(IObserver<T> observer);
 
-		void Unregister(IObserver<T> observer);
-	}
+        void Unregister(IObserver<T> observer);
+    }
 }
