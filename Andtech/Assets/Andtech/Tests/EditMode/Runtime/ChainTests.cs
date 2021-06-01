@@ -3,64 +3,64 @@ using NUnit.Framework;
 namespace Andtech.Tests
 {
 
-	public class ChainTests
-	{
+    public class ChainTests
+    {
 
-		[Test]
-		public void TestTrivialChain()
-		{
-			var chain = new Chain<int>();
+        [Test]
+        public void TestTrivialChain()
+        {
+            var chain = new Chain<int>();
 
-			var result = chain.Run(10);
+            var result = chain.Run(10);
 
-			Assert.AreEqual(10, result);
-		}
+            Assert.AreEqual(10, result);
+        }
 
-		[Test]
-		public void TestModifiedChain()
-		{
-			var chain = new Chain<int>(Subtract);
+        [Test]
+        public void TestModifiedChain()
+        {
+            var chain = new Chain<int>(Subtract);
 
-			var result = chain.Run(10);
+            var result = chain.Run(10);
 
-			Assert.AreEqual(9, result);
+            Assert.AreEqual(9, result);
 
-			int Subtract(in int input)
-			{
-				return input - 1;
-			}
-		}
+            int Subtract(in int input)
+            {
+                return input - 1;
+            }
+        }
 
-		[Test]
-		public void TestBooleanChain()
-		{
-			var chain = new Chain<bool>(TestAndTrue, TestAndFalse, TestAndTrue);
-			var result = chain.Run(true);
-			Assert.IsFalse(result);
+        [Test]
+        public void TestBooleanChain()
+        {
+            var chain = new Chain<bool>(TestAndTrue, TestAndFalse, TestAndTrue);
+            var result = chain.Run(true);
+            Assert.IsFalse(result);
 
-			chain = new Chain<bool>(Invert, Passthrough, Invert, Invert);
-			result = chain.Run(false);
-			Assert.IsFalse(false);
+            chain = new Chain<bool>(Invert, Passthrough, Invert, Invert);
+            result = chain.Run(false);
+            Assert.IsFalse(false);
 
-			bool Passthrough(in bool x)
-			{
-				return x;
-			}
+            bool Passthrough(in bool x)
+            {
+                return x;
+            }
 
-			bool Invert(in bool x)
-			{
-				return !x;
-			}
+            bool Invert(in bool x)
+            {
+                return !x;
+            }
 
-			bool TestAndTrue(in bool x)
-			{
-				return x & true;
-			}
+            bool TestAndTrue(in bool x)
+            {
+                return x & true;
+            }
 
-			bool TestAndFalse(in bool x)
-			{
-				return x & false;
-			}
-		}
-	}
+            bool TestAndFalse(in bool x)
+            {
+                return x & false;
+            }
+        }
+    }
 }
